@@ -5,12 +5,15 @@
     },
     {
       "path": "./github-tf",
-      "name": "Github-Terraform",
+      "name": "Github-Terraform"
     },
     {
       "path": "./word-press/",
-      "name": "WordPress-Docker",
-    },
+      "name": "WordPress-Docker"
+    }
   ],
-  "settings": {}
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
