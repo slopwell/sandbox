@@ -1,0 +1,1 @@
+displayswitch.exe /internal
