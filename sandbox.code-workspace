@@ -6,7 +6,11 @@
     {
       "path": "./github-tf",
       "name": "Github-Terraform",
-    }
+    },
+    {
+      "path": "./word-press/",
+      "name": "WordPress-Docker",
+    },
   ],
   "settings": {}
 }
