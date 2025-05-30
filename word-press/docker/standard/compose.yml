@@ -1,0 +1,86 @@
+# WordPress + MySQL + phpMyAdmin + MongoDB + NodeJS + NginX
+
+version: '3.1'
+services:
+  WordPress:
+    image: wordpress:latest
+    container_name: WordPress
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: MySQL
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+    depends_on:
+      - MySQL
+    networks:
+      - WordPress
+
+  MySQL:
+    image: mysql:5.7
+    container_name: MySQL
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - WordPress
+
+  phpMyAdmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpMyAdmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: MySQL
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - WordPress
+
+  MongoDB:
+    image: mongo:latest
+    container_name: MongoDB
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - WordPress
+
+  NodeJS:
+    image: node:latest
+    container_name: NodeJS
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./nodejs:/app
+    networks:
+      - WordPress
+
+  NginX:
+    image: nginx:latest
+    container_name: NginX
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - WordPress
+
+networks:
+  WordPress:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongodb_data:
