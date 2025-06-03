@@ -11,14 +11,9 @@ resource "github_repository" "sandbox" {
 
 # first commit
 resource "github_repository_file" "initial_commit" {
-  repository        = github_repository.sandbox.name
-  file              = "README.md"
-  content           = "This is initial commit in repository."
-  commit_message    = "Initial commit"
+  repository     = github_repository.sandbox.name
+  file           = "README.md"
+  content        = "This is initial commit in repository."
+  commit_message = "Initial commit"
 
-}
-
-resource "github_branch_default" "main" {
-  repository = github_repository.sandbox.name
-  branch     = "main"
 }
