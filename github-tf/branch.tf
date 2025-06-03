@@ -22,8 +22,6 @@ resource "github_repository_ruleset" "main_branch_protection" {
 
     pull_request {
       require_code_owner_review = true
-
-      # 管理者（オーナー）はバイパス可能
     }
   }
 
