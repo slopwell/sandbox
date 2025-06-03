@@ -4,6 +4,10 @@
       "path": "."
     },
     {
+      "path": "./css",
+      "name": "Modern-CSS"
+    },
+    {
       "path": "./github-tf",
       "name": "Github-Terraform"
     },
@@ -14,6 +18,9 @@
   ],
   "settings": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[svg]": {
+      "editor.defaultFormatter": "jock.svg"
+    }
   }
 }

@@ -1,0 +1,128 @@
+/* pタグの要素の文字サイズを32px */
+p  {
+  font-size: 32px;
+}
+
+/* div in div の要素を対象 */
+div>div {
+  box-sizing: border-box;
+  border: 2px solid #8c8c8c ;
+  width: 50px;
+  display: grid;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* 要素の開始終了に装飾する */
+.border-block {
+  border-block-start: dotted 24px red;
+  border-block-end-color: blueviolet;
+  border-block-end-style: dotted;
+  border-block-end-width: thick;
+}
+
+/* 輪郭線だけにする */
+.outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #42b883;
+}
+
+/* transformで指定された動作をする関数的な */
+@keyframes slide-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100px);
+  }
+}
+
+/* アニメーションを適用する */
+.anime-slide {
+  /* @keyframe:slide-xに紐づける */
+  animation-name: slide-x;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+/* ------------------------------------------------- */
+/* 立方体のスタイル                                  */
+/* 正確には正面からのアングルで立方体に見える四面体  */
+/* ------------------------------------------------- */
+.container {
+  width: 100px;
+  height: 100px;
+  margin : 24px;
+  border : none;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  backface-visibility: visible;
+  perspective: 300px;
+  /* flat or preserve-3d- */
+  transform-style: preserve-3d;
+
+  animation-name: cube-spin;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+}
+
+.face {
+  display: block; 
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: none;
+  line-height: 100px;
+  font-family: sans-serif;
+  font-size: 60px;
+  color: white;
+  text-align: center;
+}
+
+.potl {
+  perspective-origin: top left;
+}
+
+.front {
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateZ(50px);
+}
+
+.back {
+  background: rgba(0, 255, 0, 1);
+  color: black;
+  transform: rotateY(180deg) translateZ(50px);
+}
+
+.right {
+  background: rgba(196, 0, 0, 0.7);
+  transform: rotateY(90deg) translateZ(50px);
+}
+
+.left {
+  background: rgba(0, 0, 196, 0.7);
+  transform: rotateY(-90deg) translateZ(50px);
+}
+
+.top {
+  background: rgba(196, 196, 0, 0.7);
+  transform: rotateX(90deg) translateZ(50px);
+}
+
+.bottom {
+  background: rgba(196, 0, 196, 0.7);
+  transform: rotateX(-90deg) translateZ(50px);
+}
+
+@keyframes cube-spin {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
