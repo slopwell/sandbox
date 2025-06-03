@@ -18,16 +18,16 @@ resource "github_repository_ruleset" "main_branch_protection" {
   }
 
   rules {
-    creation                = true
-    update                  = true
-    deletion                = true
     required_linear_history = true
 
     pull_request {
-      required_approving_review_count = 1
-      require_code_owner_review       = true
-      dismiss_stale_reviews_on_push   = true
+      require_code_owner_review = true
     }
+  }
 
+  bypass_actors {
+    actor_type = "RepositoryRole"
+    actor_id = 5
+    bypass_mode = "always"
   }
 }
