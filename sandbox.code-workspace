@@ -16,6 +16,10 @@
       "name": "Github-Terraform"
     },
     {
+      "path": "./mail-server",
+      "name": "Mail-Server"
+    },
+    {
       "path": "./word-press/",
       "name": "WordPress-Docker"
     }
