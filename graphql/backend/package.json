@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc && cp -R ./src/schema dist/",
+    "start": "npm run compile && node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.4",
+    "@types/jsonwebtoken": "^9.0.3",
+    "prisma": "^5.4.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.5",
+    "@apollo/server": "^4.9.4",
+    "@prisma/client": "^5.4.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
