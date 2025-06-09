@@ -1,0 +1,127 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createMyCats(input: CreateMyCatsInput!): MyCats
+  deleteMyCats(input: DeleteMyCatsInput!): MyCats
+  updateMyCats(input: UpdateMyCatsInput!): MyCats
+}
+
+type Query {
+  getMyCats(id: String!, name: String!): MyCats
+  listMyCats(
+    filter: TableMyCatsFilterInput
+    limit: Int
+    nextToken: String
+  ): MyCatsConnection
+}
+
+type MyCats {
+  id: String!
+  name: String!
+}
+
+type MyCatsConnection {
+  items: [MyCats]
+  nextToken: String
+}
+
+type Subscription {
+  onCreateMyCats(id: String, name: String): MyCats
+    @aws_subscribe(mutations: ["createMyCats"])
+  onDeleteMyCats(id: String, name: String): MyCats
+    @aws_subscribe(mutations: ["deleteMyCats"])
+  onUpdateMyCats(id: String, name: String): MyCats
+    @aws_subscribe(mutations: ["updateMyCats"])
+}
+
+input CreateMyCatsInput {
+  id: String!
+  name: String!
+}
+
+input DeleteMyCatsInput {
+  id: String!
+  name: String!
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableBooleanFilterInput {
+  attributeExists: Boolean
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  attributeExists: Boolean
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input TableIDFilterInput {
+  attributeExists: Boolean
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input TableIntFilterInput {
+  attributeExists: Boolean
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableMyCatsFilterInput {
+  id: TableStringFilterInput
+  name: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  attributeExists: Boolean
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input UpdateMyCatsInput {
+  id: String!
+  name: String!
+}
