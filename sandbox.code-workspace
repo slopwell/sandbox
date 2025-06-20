@@ -4,6 +4,10 @@
       "path": "."
     },
     {
+      "path": "./basic-auth/",
+      "name": "BasicAuthNginx"
+    },
+    {
       "path": "./css",
       "name": "Modern-CSS"
     },
