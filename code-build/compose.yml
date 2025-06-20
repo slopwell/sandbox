@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  aws-codebuild:
+    image: aws/codebuild/standard:7.0
+    container_name: aws-codebuild
+    privileged: true
+    restart: always
+    volumes:
+      - type: bind
+        source: ./share
+        target: /share
+      - type: bind
+        source: ~/.aws
+        target: /home/ec2-user/.aws
