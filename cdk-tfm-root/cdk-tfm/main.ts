@@ -96,7 +96,7 @@ class LambdaStack extends TerraformStack {
     // Create and configure API gateway
     const api = new aws.apigatewayv2Api.Apigatewayv2Api(this, "api-gw", {
       name: name,
-      description: "generated with aws cdk-tf by mg0515",
+      description: "generated with aws cdk-tf by slopwell",
       protocolType: "WEBSOCKET",
       target: lambdaFunc.arn,
     });
