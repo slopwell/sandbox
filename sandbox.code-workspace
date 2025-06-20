@@ -8,6 +8,14 @@
       "name": "BasicAuthNginx"
     },
     {
+      "path": "./cdk-tfm-root/",
+      "name": "AWS-CDK-Terraform"
+    },
+    {
+      "path": "./code-build/",
+      "name": "CodeBuildContainer"
+    },
+    {
       "path": "./css",
       "name": "Modern-CSS"
     },
