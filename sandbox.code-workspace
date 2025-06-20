@@ -12,6 +12,10 @@
       "name": "ExpressJS"
     },
     {
+      "path": "./flask",
+      "name": "flask"
+    },
+    {
       "path": "./github-tf",
       "name": "Github-Terraform"
     },
