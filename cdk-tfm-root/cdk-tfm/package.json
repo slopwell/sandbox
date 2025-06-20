@@ -1,0 +1,31 @@
+{
+  "name": "@cdktf-lambda-demo/stack",
+  "version": "0.0.0",
+  "main": "main.js",
+  "license": "MPL-2.0",
+  "private": true,
+  "scripts": {
+    "get": "cdktf get",
+    "build": "tsc",
+    "synth": "cdktf synth",
+    "compile": "tsc --pretty",
+    "watch": "tsc -w",
+    "test": "echo ok",
+    "upgrade": "npm i cdktf@latest cdktf-cli@latest",
+    "upgrade:next": "npm i cdktf@next cdktf-cli@next"
+  },
+  "dependencies": {
+    "@cdktf/provider-aws": "^19.13.0",
+    "@cdktf/provider-random": "^11.0.0",
+    "cdktf": "^0.20.6",
+    "cdktf-cli": "^0.20.6"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.76",
+    "esbuild": "^0.20.2",
+    "typescript": "^5.4.4"
+  },
+  "volta": {
+    "node": "18.20.1"
+  }
+}

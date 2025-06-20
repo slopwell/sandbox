@@ -1,0 +1,21 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./frontend:/usr/share/nginx/html
+    networks:
+      - my-network
+  express:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    networks:
+      - my-network
+    command: sh -c "npm install && npm start"
+networks:
+  my-network:
+    driver: bridge
