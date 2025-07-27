@@ -1,7 +1,6 @@
 resource "aws_bedrockagent_knowledge_base" "bedrock_knowledge_base_v2" {
   description = null
   name        = "${var.namespace}-knowledge-base-v2"
-  region      = var.aws_region
   role_arn    = aws_iam_role.knowledge_base_role.arn
   tags        = null
   knowledge_base_configuration {
