@@ -1,0 +1,16 @@
+#!/bin/bash
+export AWS_PROFILE=
+export MFA_ARN=
+
+export NAMESPACE=
+export AWS_REGION=ap-northeast-1
+export AWS_DEFAULT_REGION=$AWS_REGION
+export AWS_DEFAULT_OUTPUT=json
+
+export TF_VAR_namespace=$NAMESPACE
+export TF_VAR_aws_region=$AWS_REGION
+
+# Pinecone API Key (required)
+export PINECONE_API_KEY=
+export TF_VAR_pinecone_api_key=$PINECONE_API_KEY
+
