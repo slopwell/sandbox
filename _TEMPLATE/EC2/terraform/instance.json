@@ -1,0 +1,11 @@
+{
+  "cmd": "",
+  "instances": [
+    {
+      "name": "Dev@slopwell-sandbox",
+      "env": "dev",
+      "itype": "t3.nano",
+      "volume_size": 100
+    }
+  ]
+}
