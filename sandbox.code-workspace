@@ -16,6 +16,10 @@
       "name": "CodeBuildContainer"
     },
     {
+      "path": "./cognito/",
+      "name": "Cognito"
+    },
+    {
       "path": "./css",
       "name": "Modern-CSS"
     },
@@ -32,12 +36,20 @@
       "name": "Github-Terraform"
     },
     {
+      "path": "./github-repos",
+      "name": "Github-Repository"
+    },
+    {
       "path": "./mail-server",
       "name": "Mail-Server"
     },
     {
       "path": "./word-press/",
       "name": "WordPress-Docker"
+    },
+    {
+      "path": "./strands-agent",
+      "name": "AWS-Strands-Agent"
     }
   ],
   "settings": {
@@ -45,6 +57,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[svg]": {
       "editor.defaultFormatter": "jock.svg"
+    },
+    "[terraform]": {
+      "editor.defaultFormatter": "hashicorp.terraform"
     }
   }
 }

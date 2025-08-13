@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "slopwell",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.129",
+    "@types/node": "20.4.1",
+    "aws-lambda": "^1.0.7",
+    "esbuild": "^0.19.7",
+    "typescript": "^5.3.2"
+  },
+  "volta": {
+    "node": "18.18.2"
+  }
+}
