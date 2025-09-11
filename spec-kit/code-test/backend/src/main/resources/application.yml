@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookdb
+    username: bookuser
+    password: bookpass
+  jooq:
+    sql-dialect: POSTGRES
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
