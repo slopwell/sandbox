@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Book Management API
+  version: 1.0.0
+paths:
+  /books:
+    post:
+      summary: 書籍の新規登録
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+      responses:
+        '201':
+          description: 書籍作成成功
+        '400':
+          description: バリデーションエラー
+    put:
+      summary: 書籍の更新
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+      responses:
+        '200':
+          description: 書籍更新成功
+        '400':
+          description: バリデーションエラー
+  /authors:
+    post:
+      summary: 著者の新規登録
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorRequest'
+      responses:
+        '201':
+          description: 著者作成成功
+        '400':
+          description: バリデーションエラー
+    put:
+      summary: 著者の更新
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorRequest'
+      responses:
+        '200':
+          description: 著者更新成功
+        '400':
+          description: バリデーションエラー
+  /authors/{authorId}/books:
+    get:
+      summary: 著者に紐づく書籍一覧取得
+      parameters:
+        - in: path
+          name: authorId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 書籍一覧取得成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookResponse'
+        '404':
+          description: 著者が存在しない
+components:
+  schemas:
+    BookRequest:
+      type: object
+      required:
+        - title
+        - price
+        - authors
+        - status
+      properties:
+        title:
+          type: string
+        price:
+          type: integer
+          minimum: 0
+        authors:
+          type: array
+          items:
+            type: integer
+        status:
+          type: string
+          enum: [未出版, 出版済み]
+    AuthorRequest:
+      type: object
+      required:
+        - name
+        - birthdate
+      properties:
+        name:
+          type: string
+        birthdate:
+          type: string
+          format: date
+    BookResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        price:
+          type: integer
+        status:
+          type: string
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorResponse'
+    AuthorResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        birthdate:
+          type: string
+          format: date

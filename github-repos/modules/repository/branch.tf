@@ -1,6 +1,8 @@
 resource "github_branch_default" "main" {
   repository = github_repository.repository.name
   branch     = "main"
+
+  depends_on = [github_repository_file.initial_commit]
 }
 
 
@@ -30,4 +32,6 @@ resource "github_repository_ruleset" "main_branch_protection" {
     actor_id = 5
     bypass_mode = "always"
   }
+
+  depends_on = [github_branch_default.main]
 }
