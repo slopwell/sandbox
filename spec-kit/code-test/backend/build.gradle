@@ -1,0 +1,113 @@
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'nu.studer.jooq' version '8.2'
+}
+
+// Ensure JUnit platform versions align with Spring Boot 3.1.x
+dependencyManagement {
+    imports {
+        mavenBom 'org.junit:junit-bom:5.9.3'
+    }
+}
+
+
+
+test {
+    useJUnitPlatform()
+    // includeパターン指定を一時的に削除
+    testLogging {
+        events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+        showStandardStreams = true
+        exceptionFormat "full"
+    }
+}
+
+// jOOQ code generation configuration
+// jOOQ code generation configuration
+jooq {
+    version = '3.19.7'
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://db:5432/bookdb'
+                    user = 'bookuser'
+                    password = 'bookpass'
+                }
+                generator {
+                    name = 'org.jooq.codegen.KotlinGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'jooq.generated'
+                        directory = 'src/main/kotlin'
+                    }
+                }
+            }
+        }
+    }
+}
+
+// --- テストソースセットの明示的指定 ---
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+bootJar {
+    mainClass = 'com.example.ApplicationKt'
+}
+
+def postgresVersion = '42.6.0'
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.flywaydb:flyway-core'
+    implementation "org.postgresql:postgresql:${postgresVersion}"
+    jooqGenerator "org.postgresql:postgresql:${postgresVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // Force JUnit platform to the Spring Boot 3.1.x compatible version
+    testImplementation enforcedPlatform('org.junit:junit-bom:5.9.3')
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+// Safety net: force specific junit artifacts to the known-good versions to avoid transitive BOM clashes
+configurations.all {
+    resolutionStrategy {
+        force 'org.junit.jupiter:junit-jupiter-api:5.9.3',
+              'org.junit.jupiter:junit-jupiter-engine:5.9.3',
+              'org.junit.jupiter:junit-jupiter:5.9.3',
+              'org.junit.jupiter:junit-jupiter-params:5.9.3',
+              'org.junit.platform:junit-platform-commons:1.9.3',
+              'org.junit.platform:junit-platform-engine:1.9.3'
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Dockerビルド時はgenerateJooqを無効化
+tasks.named('generateJooq').configure { enabled = false }
