@@ -8,6 +8,8 @@ resource "aws_bedrockagent_prompt" "prompt" {
   default_variant             = "variantOne"
   description                 = null
   name                        = "${var.namespace}-test"
+  region                      = var.aws_region
+  tags                        = null
   variant {
     additional_model_request_fields = null
     model_id                        = local.llm_model

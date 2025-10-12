@@ -16,3 +16,8 @@ module "aws" {
   dense_connection_string = module.pinecone.dense_connection_string
   aws_region              = local.aws_region
 }
+
+import {
+  to = aws_bedrockagent_prompt.prompt
+  id = "3UB7RS13CR"
+}

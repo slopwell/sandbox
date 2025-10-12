@@ -1,6 +1,5 @@
 #!/bin/bash
 export AWS_PROFILE=
-export MFA_ARN=
 
 export NAMESPACE=
 export AWS_REGION=ap-northeast-1

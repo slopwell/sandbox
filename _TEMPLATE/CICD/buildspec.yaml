@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - npm install
+      - echo Installing tfenv...
+      - "git clone https://github.com/tfutils/tfenv.git ~/.tfenv"
+      - "ln -s ~/.tfenv/bin/* /usr/local/bin"
+      - "tfenv install $TF_VERSION"
+      - "tfenv use $TF_VERSION"
+      - echo Installing terragrunt...
+      - "curl -Ls -o terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.48.0/terragrunt_linux_amd64"
+      - "mv terragrunt /usr/local/bin/terragrunt"
+      - "chown root:root /usr/local/bin/terragrunt"
+      - "chmod 555 /usr/local/bin/terragrunt"
+      - "cd /home/slopwell/slopwell/slopwell-sandbox/_TEMPLATE/CICD"
+      - "terragrunt --version"
+      - "echo end of install phase"
+  pre_build:
+    commands:
+      - "terragrunt init"
+  build:
+    commands:
+      - "terragrunt plan -out=tfplan"
