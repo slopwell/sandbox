@@ -76,7 +76,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   # 関連するリージョンだけ開けておく
   restrictions {
     geo_restriction {
-      restriction_type = "none"
+      restriction_type = "whitelist"
       locations        = ["JP", "US"]
     }
   }
