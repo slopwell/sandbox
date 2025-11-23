@@ -1,4 +1,4 @@
-# CloudFront Origin Access Control（S3バケットへのアクセス制御）
+# CloudFront Origin Access Control(S3バケットへのアクセス制御)
 resource "aws_cloudfront_origin_access_control" "s3_oac" {
   name                              = "${var.namespace}-s3-large-file-storage-oac"
   description                       = "OAC for S3 large file storage"
@@ -7,7 +7,33 @@ resource "aws_cloudfront_origin_access_control" "s3_oac" {
   signing_protocol                  = "sigv4"
 }
 
-# CloudFront Distribution（大容量ファイル配信用）
+# Cache Policy（キャッシュ動作を制御）
+resource "aws_cloudfront_cache_policy" "jwt_cache_policy" {
+  name        = "${var.namespace}-jwt-cache-policy"
+  comment     = "Cache policy for JWT authentication"
+  default_ttl = 3600
+  max_ttl     = 86400
+  min_ttl     = 0
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    headers_config {
+      header_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+
+    enable_accept_encoding_gzip   = true
+    enable_accept_encoding_brotli = true
+  }
+}
+
+# CloudFront Distribution(大容量ファイル配信用)
 resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
   comment             = "CloudFront distribution for JWT-protected large files"
@@ -18,7 +44,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     domain_name              = aws_s3_bucket.slopwell_large_file_storage.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.s3_oac.id
     origin_id                = "S3-${aws_s3_bucket.slopwell_large_file_storage.id}"
-
   }
 
   default_cache_behavior {
@@ -26,51 +51,18 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "S3-${aws_s3_bucket.slopwell_large_file_storage.id}"
 
-    forwarded_values {
-      # JWTトークン用
-      # ----------------
-      headers      = ["Authorization"]
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
+    cache_policy_id = aws_cloudfront_cache_policy.jwt_cache_policy.id
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
     compress               = true
 
-    # Lambda@Edgeの関連付け（viewer-requestでJWT認証）
+    # Lambda@Edgeの関連付け(viewer-requestでJWT認証)
     lambda_function_association {
       event_type   = "viewer-request"
       lambda_arn   = aws_lambda_function.jwt_auth_edge.qualified_arn
       include_body = false
     }
   }
-
-  # 特定のパスに対して異なる設定が必要な場合
-  # ordered_cache_behavior {
-  #   path_pattern     = "/protected/*"
-  #   allowed_methods  = ["GET", "HEAD"]
-  #   cached_methods   = ["GET", "HEAD"]
-  #   target_origin_id = "S3-${aws_s3_bucket.slopwell_large_file_storage.id}"
-  #
-  #   forwarded_values {
-  #     query_string = false
-  #     headers      = ["Authorization"]
-  #     cookies {
-  #       forward = "none"
-  #     }
-  #   }
-  #
-  #   viewer_protocol_policy = "redirect-to-https"
-  #   min_ttl                = 0
-  #   default_ttl            = 0
-  #   max_ttl                = 0
-  # }
 
   # 設定しなくてもいいかも
   # 関連するリージョンだけ開けておく
@@ -86,7 +78,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cloudfront_default_certificate = true
   }
 
-  # カスタムエラーレスポンス（オプション）
+  # カスタムエラーレスポンス(オプション)
   custom_error_response {
     error_code            = 403
     response_code         = 403

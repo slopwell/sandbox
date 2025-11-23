@@ -200,6 +200,44 @@ resource "aws_api_gateway_stage" "main" {
   }
 }
 
+resource "aws_api_gateway_deployment" "prod" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+
+  triggers = {
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_resource.auth.id,
+      aws_api_gateway_resource.auth_login.id,
+      aws_api_gateway_method.auth_login_post.id,
+      aws_api_gateway_integration.auth_login_lambda.id,
+      aws_api_gateway_resource.api.id,
+      aws_api_gateway_resource.api_sample.id,
+      aws_api_gateway_method.api_sample_get.id,
+      aws_api_gateway_integration.api_sample_lambda.id,
+    ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.auth_login_lambda,
+    aws_api_gateway_integration.api_sample_lambda,
+  ]
+}
+
+# ステージ
+resource "aws_api_gateway_stage" "prod" {
+  deployment_id = aws_api_gateway_deployment.prod.id
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  stage_name    = "prod"
+
+  tags = {
+    Name        = "${var.namespace}_API Gateway Stage"
+    Environment = "Prod"
+  }
+}
+
 # CloudWatch Logs グループ
 resource "aws_cloudwatch_log_group" "api_gateway_logs" {
   name              = "/aws/apigateway/${var.namespace}-api"

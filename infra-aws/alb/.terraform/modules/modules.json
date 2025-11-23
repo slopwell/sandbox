@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"app1-vpc","Source":"./stack/app1","Dir":"stack/app1"},{"Key":"iam","Source":"../moudule/iam","Dir":"../moudule/iam"}]}
