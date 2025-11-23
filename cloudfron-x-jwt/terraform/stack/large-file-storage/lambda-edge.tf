@@ -22,14 +22,6 @@ resource "aws_lambda_function" "jwt_auth_edge" {
 
   source_code_hash = data.archive_file.jwt_auth_edge_zip.output_base64sha256
 
-  environment {
-    variables = {
-      USER_POOL_ID = var.cognito_user_pool_id
-      CLIENT_ID    = var.cognito_client_id
-      AWS_REGION   = var.region
-    }
-  }
-
   tags = {
     Name        = "${var.namespace}_CloudFront JWT Auth"
     Environment = "Dev"
