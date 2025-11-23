@@ -4,6 +4,14 @@
       "path": "."
     },
     {
+      "path": "./cloudfront-apigw-behavior/",
+      "name": "CloudFront-APIGW-Behavior"
+    },
+    {
+      "path": "./cloudfron-x-jwt/",
+      "name": "CloudFront-X-JWT"
+    },
+    {
       "path": "./basic-auth/",
       "name": "BasicAuthNginx"
     },
