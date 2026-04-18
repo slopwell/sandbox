@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[svg]": {
+      "editor.defaultFormatter": "jock.svg",
+    },
+    "[terraform]": {
+      "editor.defaultFormatter": "hashicorp.terraform",
+    },
+  },
+}
