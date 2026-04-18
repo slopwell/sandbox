@@ -1,0 +1,22 @@
+{
+  "name": "learning-sst",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy:dev": "sst deploy --stage dev",
+    "dev": "sst dev",
+    "diff": "sst diff",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "sst": "4.7.7"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.161"
+  }
+}
